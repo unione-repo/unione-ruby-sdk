@@ -28,6 +28,18 @@ module UniOne
           @amp = amp
         end
 
+        # An HTML body, with an optional plain-text part.
+        # @return [BodyObject]
+        def self.html(html, plaintext = nil)
+          new(html: html, plaintext: plaintext)
+        end
+
+        # A plain-text body.
+        # @return [BodyObject]
+        def self.text(plaintext)
+          new(plaintext: plaintext)
+        end
+
         # Builds the object from decoded JSON. Lenient: a missing field, nil or a value of another type
         # gives nil (data that is not a Hash gives an empty object).
         def self.from_h(data)

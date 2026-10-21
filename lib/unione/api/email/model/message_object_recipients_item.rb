@@ -47,6 +47,31 @@ module UniOne
             @metadata = metadata
           end
 
+          # A recipient from "email" or "Name <email>": the name goes to the to_name substitution (the
+          # name in the "To" header).
+          # @param address [String]
+          # @param substitutions [Hash{String => Object}, nil] more substitutions of the recipient
+          # @return [MessageObjectRecipientsItem]
+          def self.from_address(address, substitutions = nil)
+            email = address.to_s.strip
+            name = ''
+            match = email.match(/\A(.*)<([^>]+)>\z/m)
+            if match
+              email = match[2].strip
+              name = match[1].strip.gsub(/\A"+|"+\z/, '')
+            end
+            substitutions = { 'to_name' => name }.merge(substitutions || {}) unless name.empty?
+            new(email: email, substitutions: substitutions)
+          end
+
+          # Sets the metadata of the recipient (returned in the webhook events of its email).
+          # @param metadata [Hash{String => String}]
+          # @return [MessageObjectRecipientsItem] the recipient
+          def with_metadata(metadata)
+            self.metadata = metadata
+            self
+          end
+
           # Builds the object from decoded JSON. Lenient: a missing field, nil or a value of another type
           # gives nil (data that is not a Hash gives an empty object).
           def self.from_h(data)
