@@ -27,8 +27,8 @@ class ClientTest < Minitest::Test
     sent = transport.requests[0]
     assert_equal 'POST', sent[:method]
     assert_equal '/api/v1/email/send.json', sent[:uri].path
-    assert_equal [['platform', 'ruby-sdk.1.3.0']], URI.decode_www_form(sent[:uri].query)
-    assert_equal 'ruby-sdk.1.3.0', ::UniOne::Client::PLATFORM
+    assert_equal [['platform', 'ruby-sdk.1.3.1']], URI.decode_www_form(sent[:uri].query)
+    assert_equal 'ruby-sdk.1.3.1', ::UniOne::Client::PLATFORM
     assert_equal API_KEY, sent[:headers]['X-API-KEY']
     assert_equal 'application/json', sent[:headers]['Content-Type']
     expected = {
@@ -72,7 +72,7 @@ class ClientTest < Minitest::Test
     api.api_client.call('/system/ping.json')
 
     sent = transport.requests[0]
-    assert_equal [['platform', 'rails.1.0.0,ruby-sdk.1.3.0']], URI.decode_www_form(sent[:uri].query)
+    assert_equal [['platform', 'rails.1.0.0,ruby-sdk.1.3.1']], URI.decode_www_form(sent[:uri].query)
     assert_equal '42', sent[:headers]['X-Request-Id']
     assert_equal 'my-app', sent[:headers]['User-Agent']
     assert_equal API_KEY, sent[:headers]['X-API-KEY']
@@ -92,7 +92,7 @@ class ClientTest < Minitest::Test
       response = ::UniOne::UniOneClient.new(API_KEY, url).email.send_email(send_request)
 
       assert_equal 'local-job', response.job_id
-      assert_match(%r{\APOST /api/v1/email/send\.json\?platform=ruby-sdk\.1\.3\.0 HTTP/1\.1\r\n}, seen[:head])
+      assert_match(%r{\APOST /api/v1/email/send\.json\?platform=ruby-sdk\.1\.3\.1 HTTP/1\.1\r\n}, seen[:head])
       assert_match(/^X-API-KEY: test-key\r$/i, seen[:head])
       assert_match(%r{^Content-Type: application/json\r$}i, seen[:head])
       assert_equal send_request, JSON.parse(seen[:body])

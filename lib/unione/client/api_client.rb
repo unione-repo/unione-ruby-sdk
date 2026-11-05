@@ -7,7 +7,7 @@ require 'uri'
 module UniOne
   module Client
     # The SDK and its version in the "platform" query parameter of every request.
-    PLATFORM = 'ruby-sdk.1.3.0'
+    PLATFORM = 'ruby-sdk.1.3.1'
 
     # Default transport (HTTP layer of ApiClient): Net::HTTP of the standard library.
     #
