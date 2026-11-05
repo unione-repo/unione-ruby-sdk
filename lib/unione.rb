@@ -2,6 +2,7 @@
 
 require_relative 'unione/version'
 require_relative 'unione/client/api_error'
+require_relative 'unione/client/error_info'
 require_relative 'unione/client/configuration'
 require_relative 'unione/client/decode'
 require_relative 'unione/client/api_client'
